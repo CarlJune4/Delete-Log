@@ -1,0 +1,16 @@
+::刪除兩天前的log檔 並指定檔案名稱
+
+Rem 取得時間存於dt
+for /f "tokens=2 delims==" %%a in ('wmic OS Get localdatetime /value') do set "dt=%%a"
+Rem 將時間取年及月存於LOGTIME變數中
+set LOGTIME=%dt:~0,4%_%dt:~4,2%
+
+REM 使用forfiles篩選列出所要之檔名及設定之兩天前的檔案
+forfiles /p C:\SRBMiner /s /m %LOGTIME%*.txt /d -2 /c "cmd /c echo @path"
+
+pause
+
+REM 使用forfiles篩選刪除所要之檔名及設定之兩天前的檔案
+::forfiles /p C:\SRBMiner /s /m %LOGTIME%*.txt /d -2 /c "cmd /c del @path"
+
+::pause
